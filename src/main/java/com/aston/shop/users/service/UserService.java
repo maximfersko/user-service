@@ -51,8 +51,8 @@ public class UserService {
 	}
 
 	@Transactional
-	public void save(User user) {
-		userRepository.save(user);
+	public UserDto save(User user) {
+		return UserMapper.INSTANCE.toDto(userRepository.save(user));
 	}
 
 	@Transactional
