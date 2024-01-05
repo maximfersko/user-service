@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -33,15 +34,18 @@ public class User {
 	@Column(name = "username")
 	private String username;
 
-	@NotEmpty(message = "password should not be empty")
+	@NotEmpty(message = "Password should not be empty")
 	@Column(name = "password")
 	private String password;
 
 	@Column(name = "birthday")
-	private int birthday;
+	private LocalDate birthday;
 
 	@NotEmpty(message = "Username should not be empty")
 	@Email(message = "Email should be valid")
-	@Column(name = "mail")
-	private String mail;
+	@Column(name = "email")
+	private String email;
+
+	@Column(name = "address")
+	private String address;
 }

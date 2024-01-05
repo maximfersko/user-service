@@ -25,5 +25,11 @@ public class UserValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 		User user = (User) target;
 
+		if (userService.findByEmail(user.getEmail()).isPresent()) {
+			errors.rejectValue("Email", "", "This email is already taken !");
+		}
+		if (userService.findByPassword(user.getPassword()).isPresent()) {
+			errors.rejectValue("Password", "", "This password is already taken !");
+		}
 	}
 }

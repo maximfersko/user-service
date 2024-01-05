@@ -33,6 +33,18 @@ public class UserService {
 				.map(UserMapper.INSTANCE::toDto);
 	}
 
+	public Optional<UserDto> findByPassword(String password) {
+		return userRepository.findByPassword(password).map(UserMapper.INSTANCE::toDto);
+	}
+
+	public Optional<UserDto> findByEmail(String email) {
+		return userRepository.findByEmail(email).map(UserMapper.INSTANCE::toDto);
+	}
+
+	public Optional<UserDto> findByUsername(String username) {
+		return userRepository.findByUsername(username).map(UserMapper.INSTANCE::toDto);
+	}
+
 	@Transactional
 	public void update(User user) {
 		userRepository.saveAndFlush(user);
