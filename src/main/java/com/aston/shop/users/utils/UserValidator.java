@@ -31,5 +31,8 @@ public class UserValidator implements Validator {
 		if (userService.findByPassword(user.getPassword()).isPresent()) {
 			errors.rejectValue("Password", "", "This password is already taken !");
 		}
+		if (userService.findByUsername(user.getUsername()).isPresent()) {
+			errors.rejectValue("username", "", "This username is already taken!");
+		}
 	}
 }

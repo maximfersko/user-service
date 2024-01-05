@@ -7,14 +7,15 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Data
@@ -30,14 +31,15 @@ public class User {
 	private Long id;
 
 	@NotEmpty(message = "Username should not be empty")
-	@Size(min = 2, max = 40, message = "Username should be between 2 and 40 characters")
-	@Column(name = "username")
+	@Size(min = 2, max = 50, message = "Username should be between 2 and 40 characters")
+	@Column(name = "username", unique = true)
 	private String username;
 
 	@NotEmpty(message = "Password should not be empty")
 	@Column(name = "password")
 	private String password;
 
+	@Past(message = "Birthday must be in the future")
 	@Column(name = "birthday")
 	private LocalDate birthday;
 
@@ -46,6 +48,7 @@ public class User {
 	@Column(name = "email")
 	private String email;
 
+	@Size(min = 2, max = 100, message = "Address should be between 2 and 100 characters")
 	@Column(name = "address")
 	private String address;
 }
