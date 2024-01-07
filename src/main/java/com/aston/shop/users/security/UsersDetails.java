@@ -1,6 +1,6 @@
 package com.aston.shop.users.security;
 
-import com.aston.shop.users.model.dto.UserDto;
+import com.aston.shop.users.dto.UserDto;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
