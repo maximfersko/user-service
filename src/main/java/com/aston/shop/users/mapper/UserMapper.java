@@ -1,7 +1,7 @@
 package com.aston.shop.users.mapper;
 
 import com.aston.shop.users.dto.UserDto;
-import com.aston.shop.users.entity.entity.User;
+import com.aston.shop.users.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.stereotype.Component;

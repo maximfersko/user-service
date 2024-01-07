@@ -1,7 +1,7 @@
 package com.aston.shop.users.service;
 
 import com.aston.shop.users.dto.UserDto;
-import com.aston.shop.users.entity.entity.User;
+import com.aston.shop.users.entity.User;
 import com.aston.shop.users.mapper.UserMapper;
 import com.aston.shop.users.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

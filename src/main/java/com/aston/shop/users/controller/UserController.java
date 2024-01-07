@@ -1,7 +1,7 @@
 package com.aston.shop.users.controller;
 
 import com.aston.shop.users.dto.UserDto;
-import com.aston.shop.users.entity.entity.User;
+import com.aston.shop.users.entity.User;
 import com.aston.shop.users.service.UserService;
 import com.aston.shop.users.utils.UserValidator;
 import jakarta.validation.Valid;
