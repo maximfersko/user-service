@@ -1,16 +1,43 @@
 package com.aston.shop.users.mapper;
 
-import com.aston.shop.users.model.dto.UserDto;
-import com.aston.shop.users.model.entity.User;
+import com.aston.shop.users.dto.UserDto;
+import com.aston.shop.users.entity.entity.User;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
+import org.mapstruct.Mapping;
+import org.springframework.stereotype.Component;
 
-@Mapper
+import java.util.List;
+
+@Component
+@Mapper(componentModel = "spring")
 public interface UserMapper {
-	UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
+	@Mapping(target = "id")
+	@Mapping(target = "username")
+	@Mapping(target = "password")
+	@Mapping(target = "birthday")
+	@Mapping(target = "email")
 	UserDto toDto(User entity);
 
+	@Mapping(target = "id")
+	@Mapping(target = "username")
+	@Mapping(target = "password")
+	@Mapping(target = "birthday")
+	@Mapping(target = "email")
 	User fromDto(UserDto dto);
+
+	@Mapping(target = "id")
+	@Mapping(target = "username")
+	@Mapping(target = "password")
+	@Mapping(target = "birthday")
+	@Mapping(target = "email")
+	List<UserDto> toDto(List<User> entity);
+
+	@Mapping(target = "id")
+	@Mapping(target = "username")
+	@Mapping(target = "password")
+	@Mapping(target = "birthday")
+	@Mapping(target = "email")
+	List<User> fromDto(List<UserDto> dto);
 
 }

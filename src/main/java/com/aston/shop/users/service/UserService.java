@@ -1,8 +1,8 @@
 package com.aston.shop.users.service;
 
+import com.aston.shop.users.dto.UserDto;
+import com.aston.shop.users.entity.entity.User;
 import com.aston.shop.users.mapper.UserMapper;
-import com.aston.shop.users.model.dto.UserDto;
-import com.aston.shop.users.model.entity.User;
 import com.aston.shop.users.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,38 +11,38 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+
 @Service
 @Transactional(readOnly = true)
 public class UserService {
 	private final UserRepository userRepository;
+	private final UserMapper userMapper;
 
 	@Autowired
-	public UserService(UserRepository userRepository) {
+	public UserService(UserRepository userRepository, UserMapper userMapper) {
 		this.userRepository = userRepository;
+		this.userMapper = userMapper;
 	}
 
 	public List<UserDto> findAll() {
-		return userRepository.findAll()
-				.stream()
-				.map(UserMapper.INSTANCE::toDto)
-				.toList();
+		return userMapper.toDto(userRepository.findAll());
 	}
 
 	public Optional<UserDto> findById(Long id) {
 		return userRepository.findById(id)
-				.map(UserMapper.INSTANCE::toDto);
+				.map(userMapper::toDto);
 	}
 
 	public Optional<UserDto> findByPassword(String password) {
-		return userRepository.findByPassword(password).map(UserMapper.INSTANCE::toDto);
+		return userRepository.findByPassword(password).map(userMapper::toDto);
 	}
 
 	public Optional<UserDto> findByEmail(String email) {
-		return userRepository.findByEmail(email).map(UserMapper.INSTANCE::toDto);
+		return userRepository.findByEmail(email).map(userMapper::toDto);
 	}
 
 	public Optional<UserDto> findByUsername(String username) {
-		return userRepository.findByUsername(username).map(UserMapper.INSTANCE::toDto);
+		return userRepository.findByUsername(username).map(userMapper::toDto);
 	}
 
 	@Transactional
@@ -52,7 +52,7 @@ public class UserService {
 
 	@Transactional
 	public UserDto save(User user) {
-		return UserMapper.INSTANCE.toDto(userRepository.save(user));
+		return userMapper.toDto(userRepository.save(user));
 	}
 
 	@Transactional

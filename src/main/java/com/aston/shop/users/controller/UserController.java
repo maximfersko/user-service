@@ -1,7 +1,7 @@
 package com.aston.shop.users.controller;
 
-import com.aston.shop.users.model.dto.UserDto;
-import com.aston.shop.users.model.entity.User;
+import com.aston.shop.users.dto.UserDto;
+import com.aston.shop.users.entity.entity.User;
 import com.aston.shop.users.service.UserService;
 import com.aston.shop.users.utils.UserValidator;
 import jakarta.validation.Valid;
@@ -80,7 +80,8 @@ public class UserController {
 	@GetMapping("/users/{id}")
 	public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
 		Optional<UserDto> user = userService.findById(id);
-		return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+		return user.map(ResponseEntity::ok)
+				.orElseGet(() -> ResponseEntity.notFound().build());
 	}
 
 	@PutMapping("/users/{id}")

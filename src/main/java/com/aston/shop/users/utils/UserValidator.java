@@ -1,6 +1,6 @@
 package com.aston.shop.users.utils;
 
-import com.aston.shop.users.model.entity.User;
+import com.aston.shop.users.entity.entity.User;
 import com.aston.shop.users.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
