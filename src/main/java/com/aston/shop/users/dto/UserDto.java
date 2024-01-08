@@ -1,4 +1,4 @@
-package com.aston.shop.users.model.dto;
+package com.aston.shop.users.dto;
 
 import java.time.LocalDate;
 

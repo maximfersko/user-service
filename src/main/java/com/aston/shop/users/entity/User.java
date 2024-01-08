@@ -1,4 +1,4 @@
-package com.aston.shop.users.model.entity;
+package com.aston.shop.users.entity;
 
 
 import jakarta.persistence.Column;
