@@ -1,31 +1,33 @@
 package com.aston.shop.users.security;
 
-import com.aston.shop.users.dto.UserDto;
+import com.aston.shop.users.entity.User;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Collections;
 
-public class UsersDetails implements UserDetails {
-	private final UserDto user;
+public class JwtUserDetails implements UserDetails {
+	private final User user;
 
-	public UsersDetails(UserDto user) {
+	public JwtUserDetails(User user) {
 		this.user = user;
 	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return null;
+		return Collections.singleton(new SimpleGrantedAuthority(user.getRole().name()));
 	}
 
 	@Override
 	public String getPassword() {
-		return user.password();
+		return user.getPassword();
 	}
 
 	@Override
 	public String getUsername() {
-		return user.username();
+		return user.getUsername();
 	}
 
 	@Override

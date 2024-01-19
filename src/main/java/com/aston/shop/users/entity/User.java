@@ -3,20 +3,20 @@ package com.aston.shop.users.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -25,8 +25,8 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "users")
 public class User {
+
 	@Id
-	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
@@ -39,9 +39,10 @@ public class User {
 	@Column(name = "password")
 	private String password;
 
-	@Past(message = "Birthday must be in the future")
-	@Column(name = "birthday")
-	private LocalDate birthday;
+	@NotEmpty(message = "Firstname should not be empty")
+	@Size(min = 2, max = 50, message = "Username should be between 2 and 40 characters")
+	@Column(name = "firstname")
+	private String firstname;
 
 	@NotEmpty(message = "Username should not be empty")
 	@Email(message = "Email should be valid")
@@ -51,4 +52,9 @@ public class User {
 	@Size(min = 2, max = 100, message = "Address should be between 2 and 100 characters")
 	@Column(name = "address")
 	private String address;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "role", nullable = false)
+	private Role role;
+
 }
