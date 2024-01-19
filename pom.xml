@@ -17,6 +17,8 @@
         <java.version>17</java.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <hibernate-validator.version>8.0.1.Final</hibernate-validator.version>
+        <spring-tx.version>6.1.2</spring-tx.version>
+        <jwt.version>0.12.3</jwt.version>
     </properties>
     <dependencies>
         <dependency>
@@ -55,17 +57,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct</artifactId>
-            <version>${mapstruct.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct-processor</artifactId>
-            <version>${mapstruct.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
@@ -81,7 +72,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
-            <version>6.1.2</version>
+            <version>${spring-tx.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -99,25 +90,18 @@
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
-            <version>0.12.3</version>
+            <version>${jwt.version}</version>
         </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-impl</artifactId>
-            <version>0.12.3</version>
+            <version>${jwt.version}</version>
         </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-jackson</artifactId>
-            <version>0.12.3</version>
+            <version>${jwt.version}</version>
         </dependency>
-        <dependency>
-            <groupId>javax.annotation</groupId>
-            <artifactId>jsr250-api</artifactId>
-            <version>9.0.41</version>
-        </dependency>
-
-
     </dependencies>
 
     <build>
