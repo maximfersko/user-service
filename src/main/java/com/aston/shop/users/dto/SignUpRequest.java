@@ -6,7 +6,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
-@Schema(description = "Запрос на регистрацию")
 public record SignUpRequest(
 		@NotEmpty
 		@Size(min = 4, max = 50, message = "Username must be between 4 and 50 characters")
