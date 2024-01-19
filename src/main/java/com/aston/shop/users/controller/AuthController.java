@@ -40,7 +40,6 @@ public class AuthController {
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
 	}
 
-	@Operation(summary = "Регистрация пользователя")
 	@PostMapping("/sign-up")
 	public ResponseEntity<?> signUp(@RequestBody @Valid SignUpRequest request, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
@@ -51,7 +50,6 @@ public class AuthController {
 		}
 	}
 
-	@Operation(summary = "Регистрация пользователя")
 	@PostMapping("/sign-in")
 	public ResponseEntity<?> signIn(@RequestBody @Valid SignInRequest request, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {

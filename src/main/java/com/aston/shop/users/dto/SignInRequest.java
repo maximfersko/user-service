@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
-@Schema(description = "Запрос на аутентификацию")
 public record SignInRequest(
 		@NotEmpty
 		@Size(min = 4, max = 50, message = "Username must be between 4 and 50 characters")
