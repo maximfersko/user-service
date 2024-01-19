@@ -1,6 +1,7 @@
 package com.aston.shop.users.utils;
 
-import com.aston.shop.users.entity.User;
+import com.aston.shop.users.dto.SignInRequest;
+import com.aston.shop.users.dto.SignUpRequest;
 import com.aston.shop.users.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,21 +19,21 @@ public class UserValidator implements Validator {
 
 	@Override
 	public boolean supports(Class<?> clazz) {
-		return User.class.equals(clazz);
+		return SignUpRequest.class.equals(clazz) || SignInRequest.class.equals(clazz);
 	}
 
 	@Override
 	public void validate(Object target, Errors errors) {
-		User user = (User) target;
+		if (target instanceof SignUpRequest request) {
+			if (userService.existsByEmail(request.email())) {
+				errors.rejectValue("Email", "", "This email is already taken !");
+			}
+			if (userService.existsByUsername(request.username())) {
+				errors.rejectValue("Username", "", "This username is already taken !");
+			}
+		} else if (target instanceof SignInRequest request) {
 
-		if (userService.findByEmail(user.getEmail()).isPresent()) {
-			errors.rejectValue("Email", "", "This email is already taken !");
 		}
-		if (userService.findByPassword(user.getPassword()).isPresent()) {
-			errors.rejectValue("Password", "", "This password is already taken !");
-		}
-		if (userService.findByUsername(user.getUsername()).isPresent()) {
-			errors.rejectValue("username", "", "This username is already taken!");
-		}
+
 	}
 }
