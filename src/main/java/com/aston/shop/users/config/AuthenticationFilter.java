@@ -17,25 +17,36 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+/**
+ * AuthenticationFilter - это фильтр Spring {@link OncePerRequestFilter}, отвечающий за обработку JWT-токенов
+ * из заголовка Authorization и аутентификацию пользователей на основе предоставленного токена.
+ */
 @Component
 @AllArgsConstructor
 public class AuthenticationFilter extends OncePerRequestFilter {
+
+	/**
+	 * Префикс Bearer токена.
+	 */
 	public static final String BEARER_PREFIX = "Bearer ";
+
+	/**
+	 * Имя заголовка для токена Authorization.
+	 */
 	public static final String HEADER_NAME = "Authorization";
+
 	private final JwtService provider;
 	private final UserService userService;
 
-
 	/**
-	 * Метод фильтрации HTTP-запросов. Проверяет наличие и действительность JWT-токена в заголовке.
-	 * Если токен присутствует и действителен, создается и устанавливается аутентификация
-	 * в контексте безопасности Spring Security.
+	 * Переопределяет стандартную реализацию {@link OncePerRequestFilter#doFilterInternal(HttpServletRequest, HttpServletResponse, FilterChain)}
+	 * для извлечения и обработки JWT-токенов из заголовка Authorization.
 	 *
-	 * @param request     HTTP-запрос.
-	 * @param response    HTTP-ответ.
+	 * @param request     Входящий HTTP-запрос.
+	 * @param response    Исходящий HTTP-ответ.
 	 * @param filterChain Цепочка фильтров для обработки запроса.
-	 * @throws ServletException Возникает, если произошла ошибка в процессе обработки запроса.
-	 * @throws IOException      Возникает, если произошла ошибка ввода/вывода.
+	 * @throws ServletException Если возникает исключение во время обработки сервлета.
+	 * @throws IOException      Если возникает ошибка ввода-вывода во время обработки сервлета.
 	 */
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -52,6 +63,12 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 		filterChain.doFilter(request, response);
 	}
 
+	/**
+	 * Обрабатывает предоставленный JWT-токен и аутентифицирует пользователя.
+	 *
+	 * @param token   JWT-токен, извлеченный из заголовка Authorization.
+	 * @param request HTTP-запрос, связанный с обработкой токена.
+	 */
 	private void processToken(String token, HttpServletRequest request) {
 		if (SecurityContextHolder.getContext().getAuthentication() == null) {
 			String username = provider.extractUserName(token);
@@ -69,9 +86,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 					authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 					SecurityContextHolder.getContext().setAuthentication(authToken);
 				}
-
 			}
 		}
 	}
-
 }
