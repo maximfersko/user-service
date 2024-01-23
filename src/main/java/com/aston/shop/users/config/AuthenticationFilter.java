@@ -17,10 +17,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-/**
- * AuthenticationFilter - это фильтр Spring {@link OncePerRequestFilter}, отвечающий за обработку JWT-токенов
- * из заголовка Authorization и аутентификацию пользователей на основе предоставленного токена.
- */
 @Component
 @AllArgsConstructor
 public class AuthenticationFilter extends OncePerRequestFilter {
@@ -39,8 +35,6 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 	private final UserService userService;
 
 	/**
-	 * Переопределяет стандартную реализацию {@link OncePerRequestFilter#doFilterInternal(HttpServletRequest, HttpServletResponse, FilterChain)}
-	 * для извлечения и обработки JWT-токенов из заголовка Authorization.
 	 *
 	 * @param request     Входящий HTTP-запрос.
 	 * @param response    Исходящий HTTP-ответ.

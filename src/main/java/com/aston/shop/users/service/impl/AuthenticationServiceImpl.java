@@ -5,7 +5,7 @@ import com.aston.shop.users.dto.SignInRequest;
 import com.aston.shop.users.dto.SignUpRequest;
 import com.aston.shop.users.entity.Role;
 import com.aston.shop.users.entity.User;
-import com.aston.shop.users.security.JwtUserDetails;
+import com.aston.shop.users.security.JwtUserFactory;
 import com.aston.shop.users.service.AuthenticationService;
 import com.aston.shop.users.service.UserService;
 import lombok.AllArgsConstructor;
@@ -30,11 +30,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 				.password(passwordEncoder.encode(request.password()))
 				.firstname(request.firstname())
 				.role(Role.ROLE_USER)
+				.address(request.address())
 				.build();
 
 		userService.save(user);
 
-		UserDetails userDetails = new JwtUserDetails(user);
+		UserDetails userDetails = JwtUserFactory.create(user);
 		String token = jwtTokenProvider.generateToken(userDetails);
 		return new JwtAuthenticationResponse(token);
 	}

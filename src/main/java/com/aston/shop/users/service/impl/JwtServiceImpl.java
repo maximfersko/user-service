@@ -50,8 +50,7 @@ public class JwtServiceImpl implements JwtService {
 	 * @return Объект Claims, содержащий все утверждения из токена.
 	 */
 	private Claims extractAllClaims(String token) {
-		return Jwts.parser().setSigningKey(getSigningKey()).build().parseClaimsJws(token)
-				.getBody();
+		return Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token).getBody();
 	}
 
 	/**

@@ -1,15 +1,14 @@
 package com.aston.shop.users.controller;
 
 
+import com.aston.shop.users.dto.UserDto;
 import com.aston.shop.users.entity.User;
+import com.aston.shop.users.mapper.UserMapper;
 import com.aston.shop.users.service.impl.UserServiceImpl;
-import com.aston.shop.users.utils.UserValidator;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,34 +18,23 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Optional;
 
+@AllArgsConstructor
 @RestController
 @RequestMapping("/api")
 public class UserController {
 	private final UserServiceImpl userService;
-	private final UserValidator userValidator;
-
-	@Autowired
-	public UserController(UserServiceImpl userService, UserValidator userValidator) {
-		this.userService = userService;
-		this.userValidator = userValidator;
-	}
-
-	@InitBinder
-	protected void initBinder(WebDataBinder binder) {
-		binder.addValidators(userValidator);
-	}
-
+	private final UserMapper userMapper;
 
 
 	@GetMapping("/users")
-	public ResponseEntity<List<User>> getAllUsers() {
-		List<User> users = userService.findAll();
+	public ResponseEntity<List<UserDto>> getAllUsers() {
+		List<UserDto> users = userMapper.toDto(userService.findAll());
 		return ResponseEntity.ok(users);
 	}
 
 	@GetMapping("/users/{id}")
-	public ResponseEntity<User> getUserById(@PathVariable Long id) {
-		Optional<User> user = userService.findById(id);
+	public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
+		Optional<UserDto> user = userService.findById(id).map(userMapper::toDto);
 		return user.map(ResponseEntity::ok)
 				.orElseGet(() -> ResponseEntity.notFound().build());
 	}

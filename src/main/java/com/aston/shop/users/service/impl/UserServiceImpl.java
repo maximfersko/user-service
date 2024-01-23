@@ -3,10 +3,9 @@ package com.aston.shop.users.service.impl;
 
 import com.aston.shop.users.entity.User;
 import com.aston.shop.users.repository.UserRepository;
-import com.aston.shop.users.security.JwtUserDetails;
+import com.aston.shop.users.security.JwtUserFactory;
 import com.aston.shop.users.service.UserService;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,7 +17,6 @@ import java.util.Optional;
 
 
 @Service
-@Slf4j
 @Transactional(readOnly = true)
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -47,14 +45,13 @@ public class UserServiceImpl implements UserService {
 		Optional<User> userOptional = userRepository.findOneByUsername(username);
 		User user = userOptional.orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-		return new JwtUserDetails(user);
+		return JwtUserFactory.create(user);
 	}
 
 	@Override
 	public UserDetailsService userDetailsService() {
 		return this::findByUsername;
 	}
-
 
 	@Transactional
 	public void update(User user) {
