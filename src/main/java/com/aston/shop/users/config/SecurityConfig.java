@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -39,7 +40,7 @@ public class SecurityConfig {
 	 */
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		return http
+		return http.csrf(AbstractHttpConfigurer::disable)
 				.cors(cors -> cors.configurationSource(request -> {
 					CorsConfiguration configuration = new CorsConfiguration();
 					configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
@@ -47,12 +48,12 @@ public class SecurityConfig {
 				}))
 				.authorizeHttpRequests(request -> request
 						.requestMatchers("/api/auth/**").permitAll()
-						.requestMatchers("/swagger-ui/**", "/swagger-resources/*", "/v3/api-docs/**").permitAll()
-						.requestMatchers("/api/users/**").authenticated() // Specify the path pattern for UserController
-						.anyRequest().authenticated())
+						.requestMatchers("/api/users/**").authenticated()
+				)
 				.sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
 				.authenticationProvider(authenticationProvider())
-				.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class).build();
+				.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
+				.build();
 	}
 
 	/**
@@ -77,6 +78,7 @@ public class SecurityConfig {
 		authProvider.setPasswordEncoder(passwordEncoder());
 		return authProvider;
 	}
+
 
 	/**
 	 * Создает бин для настройки AuthenticationManager, используя AuthenticationConfiguration.

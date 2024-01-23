@@ -7,10 +7,8 @@ import com.aston.shop.users.excetions.JwtAuthenticationException;
 import com.aston.shop.users.service.AuthenticationService;
 import com.aston.shop.users.utils.UserValidator;
 import com.aston.shop.users.utils.ValidationHandler;
-import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -25,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/auth")
-@Slf4j
 public class AuthController {
 	private final UserValidator userValidator;
 	private final AuthenticationService authenticationService;
