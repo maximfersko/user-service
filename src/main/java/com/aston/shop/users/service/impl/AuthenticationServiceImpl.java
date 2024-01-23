@@ -14,6 +14,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @AllArgsConstructor
@@ -23,6 +24,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	private final PasswordEncoder passwordEncoder;
 	private AuthenticationManager authenticationManager;
 
+	@Transactional
+	@Override
 	public JwtAuthenticationResponse signUp(SignUpRequest request) {
 		var user = User.builder()
 				.username(request.username())
@@ -40,6 +43,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		return new JwtAuthenticationResponse(token);
 	}
 
+	@Transactional
 	@Override
 	public JwtAuthenticationResponse signIn(SignInRequest request) {
 		authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
