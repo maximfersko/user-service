@@ -17,7 +17,6 @@ import java.util.Optional;
 
 
 @Service
-@Transactional(readOnly = true)
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
 	private final UserRepository userRepository;
@@ -32,14 +31,19 @@ public class UserServiceImpl implements UserService {
 		return userRepository.existsByEmail(email);
 	}
 
+	@Transactional(readOnly = true)
+	@Override
 	public List<User> findAll() {
 		return userRepository.findAll();
 	}
 
+	@Transactional(readOnly = true)
+	@Override
 	public Optional<User> findById(Long id) {
 		return userRepository.findById(id);
 	}
 
+	@Transactional(readOnly = true)
 	@Override
 	public UserDetails findByUsername(String username) {
 		Optional<User> userOptional = userRepository.findOneByUsername(username);
@@ -48,22 +52,23 @@ public class UserServiceImpl implements UserService {
 		return JwtUserFactory.create(user);
 	}
 
+	@Transactional(readOnly = true)
 	@Override
 	public UserDetailsService userDetailsService() {
 		return this::findByUsername;
 	}
 
-	@Transactional
+
 	public void update(User user) {
 		userRepository.saveAndFlush(user);
 	}
 
-	@Transactional
+
 	public void save(User user) {
 		userRepository.save(user);
 	}
 
-	@Transactional
+
 	public void deleteById(Long id) {
 		userRepository.deleteById(id);
 	}

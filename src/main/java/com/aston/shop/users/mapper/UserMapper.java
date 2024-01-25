@@ -4,11 +4,9 @@ import com.aston.shop.users.dto.UserDto;
 import com.aston.shop.users.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 	@Mapping(target = "firstname")
