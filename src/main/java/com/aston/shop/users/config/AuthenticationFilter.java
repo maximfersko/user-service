@@ -35,7 +35,6 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 	private final UserService userService;
 
 	/**
-	 *
 	 * @param request     Входящий HTTP-запрос.
 	 * @param response    Исходящий HTTP-ответ.
 	 * @param filterChain Цепочка фильтров для обработки запроса.
