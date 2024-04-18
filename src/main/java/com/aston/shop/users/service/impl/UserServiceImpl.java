@@ -1,6 +1,7 @@
 package com.aston.shop.users.service.impl;
 
 
+import com.aston.shop.users.entity.Role;
 import com.aston.shop.users.entity.User;
 import com.aston.shop.users.repository.UserRepository;
 import com.aston.shop.users.security.JwtUserFactory;
@@ -23,18 +24,29 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean existsByUsername(String username) {
-		return userRepository.existsByUsername(username);
+		boolean existsedByUsername = userRepository.existsByUsername(username);
+		if (existsedByUsername) {
+			throw new UsernameNotFoundException("User with username " + username + "not found");
+		}
+		return existsedByUsername;
 	}
 
 	@Override
 	public boolean existsByEmail(String email) {
-		return userRepository.existsByEmail(email);
+		boolean existsedByEmail = userRepository.existsByEmail(email);
+		if (existsedByEmail) {
+			throw new UsernameNotFoundException("User with email " + email + "not found");
+		}
+		return existsedByEmail;
 	}
 
 	@Transactional(readOnly = true)
 	@Override
-	public List<User> findAll() {
-		return userRepository.findAll();
+	public List<User> findAllUserRole() {
+		return userRepository.findAll()
+				.stream()
+				.filter(user -> user.getRole().equals(Role.ROLE_USER))
+				.toList();
 	}
 
 	@Transactional(readOnly = true)

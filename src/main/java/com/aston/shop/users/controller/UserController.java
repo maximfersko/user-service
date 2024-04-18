@@ -20,19 +20,19 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1/")
 public class UserController {
 	private final UserServiceImpl userService;
 	private final UserMapper userMapper;
 
 
-	@GetMapping("/users")
+	@GetMapping("users")
 	public ResponseEntity<List<UserDto>> getAllUsers() {
-		List<UserDto> users = userMapper.toDto(userService.findAll());
+		List<UserDto> users = userMapper.toDto(userService.findAllUserRole());
 		return ResponseEntity.ok(users);
 	}
 
-	@GetMapping("/users/{id}")
+	@GetMapping("users/{id}")
 	public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
 		Optional<UserDto> user = userService.findById(id).map(userMapper::toDto);
 		return user.map(ResponseEntity::ok)
@@ -40,7 +40,7 @@ public class UserController {
 	}
 
 
-	@PutMapping("/users/{id}")
+	@PutMapping("users/{id}")
 	public ResponseEntity<String> updateUser(@PathVariable Long id, @RequestBody User updatedUser) {
 		Optional<User> existingUser = userService.findById(id);
 
@@ -52,7 +52,7 @@ public class UserController {
 		}
 	}
 
-	@DeleteMapping("/users/{id}")
+	@DeleteMapping("users/{id}")
 	public ResponseEntity<String> deleteUser(@PathVariable Long id) {
 		Optional<User> user = userService.findById(id);
 
