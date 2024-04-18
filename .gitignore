@@ -4,6 +4,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 json
+logs
 
 # Compiled class file
 *.class

@@ -47,8 +47,8 @@ public class SecurityConfig {
 					return configuration;
 				}))
 				.authorizeHttpRequests(request -> request
-						.requestMatchers("/api/auth/**").permitAll()
-						.requestMatchers("/api/users/**").authenticated()
+						.requestMatchers("/api/v1/auth/**").permitAll()
+						.requestMatchers("/api/v1/users/**").authenticated()
 				)
 				.sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
 				.authenticationProvider(authenticationProvider())

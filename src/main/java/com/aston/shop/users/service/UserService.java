@@ -13,7 +13,7 @@ public interface UserService {
 
 	boolean existsByEmail(String email);
 
-	List<User> findAll();
+	List<User> findAllUserRole();
 
 	UserDetails findByUsername(String username);
 
